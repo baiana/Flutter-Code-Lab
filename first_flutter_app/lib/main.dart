@@ -9,15 +9,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
+      title: 'Mantras',
+      theme: ThemeData(brightness: Brightness.light),
       home: Scaffold(
         backgroundColor: Color.fromARGB(210, 208, 254, 245),
-        appBar: AppBar(
-          title: const Text(
-            'Mantras do dia',
-          ),
-          backgroundColor: Color.fromARGB(255, 125, 206, 210),
-        ),
         body: RandomMantras(),
       ),
     );
@@ -30,6 +25,22 @@ class RandomMantraState extends State<RandomMantras> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Mantras do dia',
+        ),
+        actions: <Widget>[
+          IconButton(
+            padding: EdgeInsets.only(right: 26),
+            icon: Icon(Icons.book),
+            onPressed: _pushSaved,
+          )
+        ],
+        backgroundColor: Color.fromARGB(254, 125, 206, 210),
+      ),
+      body: _buildSuggestions(),
+    );
     return _buildSuggestions();
   }
 
@@ -46,6 +57,40 @@ class RandomMantraState extends State<RandomMantras> {
           }
           return _buildRow(_suggestions[index]);
         });
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        // Add 20 lines from here...
+
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map(
+            (String pair) {
+              return ListTile(
+                title: Text(
+                  pair,
+                  style: Theme.of(context).textTheme.body1.merge(TextStyle(
+                      color: Color.fromARGB(255, 8, 20, 29), fontSize: 16)),
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          ).toList();
+
+          return Scaffold(
+            // Add 6 lines from here...
+            appBar: AppBar(
+              title: Text('Mantras salvo!'),
+            ),
+            body: ListView(children: divided),
+          );
+        },
+      ), // ... to here.
+    );
   }
 
   Widget _buildRow(String pair) {
