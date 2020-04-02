@@ -10,4 +10,3 @@ Esse é o meu primeiro projeto utilizando Dart/Flutter, code reviews e PRs são 
 
 ![enter image description here](https://i.ibb.co/sH951QW/photo4911289945176516716.jpg)
 
-![enter image description here](https://i.ibb.co/FYjPb7V/photo4911289945176516715.jpg)
